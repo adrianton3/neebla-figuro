@@ -115,25 +115,23 @@ addTorus = (o, a, b, hue) ->
 	return
 
 
-compile = ->
+compile = (vectorizer) ->
 	@split = splitAll @bars
 
-	return
+	elements = []
 
-
-draw = (context) ->
 	@split.forEach (bar) ->
-		context.drawBar bar
+		elements.push (vectorizer.vectorizeBar bar)...
 		return
 
 	@tori.forEach ({ o, a, b, hue }) ->
-		context.drawTorusCorners o, a, b, hue
+		elements.push (vectorizer.vectorizeTorusCorners o, a, b, hue)...
 		return
 
-	return
+	elements
 
 
-proto = { addTorus, compile, draw }
+proto = { addTorus, compile }
 
 
 make = ->
